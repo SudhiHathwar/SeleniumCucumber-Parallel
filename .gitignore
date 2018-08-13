@@ -1,0 +1,11 @@
+.idea
+test-output/
+Report.json
+target/
+packages/*
+.idea/*
+node_modules
+.DS_Store
+?img?
+.idea
+Visuals/
