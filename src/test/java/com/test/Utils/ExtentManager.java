@@ -20,11 +20,13 @@ public class ExtentManager {
             htmlReporter.config().setDocumentTitle("Browser Test");
             htmlReporter.config().setReportName("Browser Test");
             htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
-            htmlReporter.config().setTheme(Theme.STANDARD);
+            htmlReporter.config().setTheme(Theme.DARK);
 
             extent = new ExtentReports();
             extent.setSystemInfo("user", System.getProperty("Test User"));
             extent.setSystemInfo("os", "Mac OSX");
+            extent.setSystemInfo("Selenium Java Version", "3.0");
+
             extent.attachReporter(htmlReporter);
         }
         return extent;

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Default Suite" thread-count="4" parallel="tests">
+<suite name="Default Suite" thread-count="1" parallel="tests">
     <listeners>
         <listener class-name="com.test.Utils.Listener"/>
+        <listener class-name="com.test.Utils.RetryListener"/>
         <listener class-name="com.test.Utils.AnnotationTransformer"/>
     </listeners>
     <test name="Test-Desktop">
@@ -14,10 +15,10 @@
     </test>
     <test name="Test-Android">
         <parameter name="platform" value="Android"></parameter>
-        <parameter name="platformVersion" value="7.0"></parameter>
-        <parameter name="deviceName" value="Moto G4 Plus"></parameter>
+        <parameter name="platformVersion" value=""></parameter>
+        <parameter name="deviceName" value=""></parameter>
         <parameter name="port" value="2315"></parameter>
-        <parameter name="udid" value="">ZY223KCRBZ</parameter>
+        <parameter name="udid" value=""></parameter>
         <parameter name="browserName" value="chrome"></parameter>
         <classes>
             <class name="com.test.Runner.RunCukesTest"/>
@@ -25,10 +26,10 @@
     </test>
     <test name="Test-IOS">
         <parameter name="platform" value="iOS"></parameter>
-        <parameter name="platformVersion" value="11.4.1"></parameter>
-        <parameter name="deviceName" value="iPhone"></parameter>
+        <parameter name="platformVersion" value=""></parameter>
+        <parameter name="deviceName" value=""></parameter>
         <parameter name="port" value="2317"></parameter>
-        <parameter name="udid" value="bf1e1896e375a15a1dbbe26b524af0a148f2fb3d"></parameter>
+        <parameter name="udid" value=""></parameter>
         <parameter name="browserName" value="safari"></parameter>
         <classes>
             <class name="com.test.Runner.RunCukesTest"/>

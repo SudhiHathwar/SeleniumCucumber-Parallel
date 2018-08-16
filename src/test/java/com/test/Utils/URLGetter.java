@@ -14,7 +14,6 @@ public class URLGetter {
         if (!environment.toLowerCase().contains("prod")) {
             return "https://" + environment + url;
         } else {
-            System.out.println(url);
             return url;
         }
     }

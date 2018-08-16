@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Retry implements IRetryAnalyzer {
-    public int maxRetryCount = 0;
+    public int maxRetryCount = 1;
     public int retryCountForTest = 0;
     private Map<String, Integer> retryCounts = new HashMap<String, Integer>();
 
