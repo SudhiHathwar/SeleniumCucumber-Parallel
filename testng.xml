@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Default Suite" thread-count="1" parallel="tests">
+<suite name="Default Suite" thread-count="4" parallel="tests">
     <listeners>
         <listener class-name="com.test.Utils.Listener"/>
         <listener class-name="com.test.Utils.RetryListener"/>
@@ -16,7 +16,7 @@
     <test name="Test-Android">
         <parameter name="platform" value="Android"></parameter>
         <parameter name="platformVersion" value=""></parameter>
-        <parameter name="deviceName" value=""></parameter>
+        <parameter name="deviceName" value="Android Device"></parameter>
         <parameter name="port" value="2315"></parameter>
         <parameter name="udid" value=""></parameter>
         <parameter name="browserName" value="chrome"></parameter>
@@ -27,7 +27,7 @@
     <test name="Test-IOS">
         <parameter name="platform" value="iOS"></parameter>
         <parameter name="platformVersion" value=""></parameter>
-        <parameter name="deviceName" value=""></parameter>
+        <parameter name="deviceName" value="iOS Device"></parameter>
         <parameter name="port" value="2317"></parameter>
         <parameter name="udid" value=""></parameter>
         <parameter name="browserName" value="safari"></parameter>

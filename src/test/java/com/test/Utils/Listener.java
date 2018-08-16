@@ -32,6 +32,21 @@ public class Listener implements ITestListener, IInvokedMethodListener {
     public void beforeInvocation ( IInvokedMethod iInvokedMethod, ITestResult iTestResult ) {
 
         if (iInvokedMethod.isTestMethod()) {
+
+            Object[] obj = iTestResult.getParameters();
+            String methodName = iTestResult.getMethod().getMethodName();
+            int counter = 0;
+            while (obj.length != counter) {
+                methodName = methodName + "_" + obj[counter];
+                counter++;
+            }
+
+            ExtentTest child = extentMap.get(iInvokedMethod.getTestMethod().getRealClass().getSimpleName())
+                    .createNode(iTestResult.getMethod().getMethodName() + "[" + obj[0] + "]")
+                    .assignCategory(iInvokedMethod.getTestMethod().getRealClass().getSimpleName());
+
+            ExtentTestManager.setExtentTest(child);
+
             URL url = null;
 
             Hooks hooks = new Hooks();
@@ -50,21 +65,6 @@ public class Listener implements ITestListener, IInvokedMethodListener {
             String browserName = iInvokedMethod.getTestMethod().getXmlTest().getLocalParameters().get("browserName");
 
             hooks.launchDriver(url, platform, platformVersion, deviceName, port, udid, browserName);
-
-            Object[] obj = iTestResult.getParameters();
-            String methodName = iTestResult.getMethod().getMethodName();
-            int counter = 0;
-            while (obj.length != counter) {
-                methodName = methodName + "_" + obj[counter];
-                counter++;
-            }
-
-            ExtentTest child = extentMap.get(iInvokedMethod.getTestMethod().getRealClass().getSimpleName())
-                    .createNode(iTestResult.getMethod().getMethodName() + "[" + obj[0] + "]")
-                    .assignCategory(iInvokedMethod.getTestMethod().getRealClass().getSimpleName());
-
-            ExtentTestManager.setExtentTest(child);
-
         }
     }
 
@@ -85,17 +85,14 @@ public class Listener implements ITestListener, IInvokedMethodListener {
             String browserName = iTestContext.getCurrentXmlTest().getLocalParameters().get("browserName");
 
             if (deviceName == null) {
-                extentMap.put(names[names.length - 1], ExtentManager.getReporter().createTest(names[names.length - 1], "Running tests on Desktop browser:" + browserName));
+                extentMap.put(names[names.length - 1], ExtentManager.getReporter().createTest(names[names.length - 1] + " - Desktop", "Running tests on Desktop browser:" + browserName));
             } else {
-
-                extentMap.put(names[names.length - 1], ExtentManager.getReporter().createTest(names[names.length - 1], "Running tests on " + deviceName + " browser:" + browserName));
-
-                //ExtentTestManager.createTest(names[names.length - 1]+ " - " + deviceName.toUpperCase(), "Running tests on " + browserName + " browser");
+                extentMap.put(names[names.length - 1], ExtentManager.getReporter().createTest(names[names.length - 1] + " - " + deviceName, "Running tests on " + deviceName + " browser:" + browserName));
             }
         }
 
         try {
-            FileUtils.cleanDirectory(new File(System.getProperty("user.dir") + "/target/screenshot/" ));
+            FileUtils.cleanDirectory(new File(System.getProperty("user.dir") + "/target/screenshot/"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -127,26 +124,31 @@ public class Listener implements ITestListener, IInvokedMethodListener {
         Object testClass = iTestResult.getInstance();
         WebDriver webDriver = LocalDriverManager.getDriver();
 
-        File scrFile = ((TakesScreenshot) webDriver)
-                .getScreenshotAs(OutputType.FILE);
+        if (webDriver != null) {
+            File scrFile = ((TakesScreenshot) webDriver)
+                    .getScreenshotAs(OutputType.FILE);
 
-        String failedScreen =
-                System.getProperty("user.dir") + "/target/screenshot/" + "/"
-                        + testClass.toString() + currentDateAndTime() + "_" + "_failed" + ".png";
+            String failedScreen =
+                    System.getProperty("user.dir") + "/target/screenshot/" + "/"
+                            + testClass.toString() + currentDateAndTime() + "_" + "_failed" + ".png";
 
-        try {
-            FileUtils.copyFile(scrFile, new File(failedScreen));
+            try {
+                FileUtils.copyFile(scrFile, new File(failedScreen));
 
+                ExtentTestManager.getTest().log(Status.FAIL, "Test Failed" + "<br></br>");
+                ExtentTestManager.getTest().log(Status.INFO, "<b>Failure Reason--->>> </b>  <br></br>" + iTestResult.getThrowable().getMessage());
+                ExtentTestManager.getTest().log(Status.INFO, "<b>Exception Details--->>></b> + <br></br>" + "<pre>" + ExceptionUtil.getStackTrace(iTestResult.getThrowable()) + "</pre>");
+                ExtentTestManager.getTest().addScreenCaptureFromPath(failedScreen, ExtentTestManager.getTest().toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            webDriver.quit();
+        } else {
             ExtentTestManager.getTest().log(Status.FAIL, "Test Failed");
-            ExtentTestManager.getTest().log(Status.INFO, "Failure Reason--->>> " + iTestResult.getThrowable().getCause().getMessage());
-            ExtentTestManager.getTest().log(Status.INFO, "Exception Details--->>>" + ExceptionUtil.getStackTrace(iTestResult.getThrowable()));
-            ExtentTestManager.getTest().addScreenCaptureFromPath(failedScreen, ExtentTestManager.getTest().toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            ExtentTestManager.getTest().log(Status.INFO, "<b>Failure Reason--->>> </b>  <br></br>" + iTestResult.getThrowable().getMessage());
+            ExtentTestManager.getTest().log(Status.INFO, "<b>Exception Details--->>></b> + <br></br>" + "<pre>" + ExceptionUtil.getStackTrace(iTestResult.getThrowable()) + "</pre>");
 
-        if (LocalDriverManager.getDriver() != null) {
-            LocalDriverManager.getDriver().quit();
         }
     }
 
@@ -163,7 +165,6 @@ public class Listener implements ITestListener, IInvokedMethodListener {
         if (((Retry) retryAnalyzer).retryCountForTest == ((Retry) retryAnalyzer).maxRetryCount) {
         }
 
-        System.out.println("I am onTestSkipped method " + getTestMethodName(iTestResult) + " skipped");
         ExtentTestManager.getTest().log(Status.SKIP, "Test Skipped or failed on execution count: " + ((Retry) retryAnalyzer).retryCountForTest);
 
         if (LocalDriverManager.getDriver() != null) {
