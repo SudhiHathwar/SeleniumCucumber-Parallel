@@ -17,12 +17,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.List;
 
 public class Listener implements ITestListener, IInvokedMethodListener {
-
-    static HashMap<String, ExtentTest> extentMap = new HashMap();
 
     private static String getTestMethodName ( ITestResult iTestResult ) {
         return iTestResult.getMethod().getConstructorOrMethod().getName();
@@ -41,7 +38,7 @@ public class Listener implements ITestListener, IInvokedMethodListener {
                 counter++;
             }
 
-            ExtentTest child = extentMap.get(iInvokedMethod.getTestMethod().getRealClass().getSimpleName())
+            ExtentTest child = ExtentTestManager.getTest()
                     .createNode(iTestResult.getMethod().getMethodName() + "[" + obj[0] + "]")
                     .assignCategory(iInvokedMethod.getTestMethod().getRealClass().getSimpleName());
 
@@ -85,9 +82,9 @@ public class Listener implements ITestListener, IInvokedMethodListener {
             String browserName = iTestContext.getCurrentXmlTest().getLocalParameters().get("browserName");
 
             if (deviceName == null) {
-                extentMap.put(names[names.length - 1], ExtentManager.getReporter().createTest(names[names.length - 1] + " - Desktop", "Running tests on Desktop browser:" + browserName));
+                ExtentTestManager.setExtentTest(ExtentManager.getReporter().createTest(names[names.length - 1] + " - Desktop", "Running tests on Desktop browser:" + browserName));
             } else {
-                extentMap.put(names[names.length - 1], ExtentManager.getReporter().createTest(names[names.length - 1] + " - " + deviceName, "Running tests on " + deviceName + " browser:" + browserName));
+                ExtentTestManager.setExtentTest(ExtentManager.getReporter().createTest(names[names.length - 1] + " - " + deviceName, "Running tests on " + deviceName + " browser:" + browserName));
             }
         }
 

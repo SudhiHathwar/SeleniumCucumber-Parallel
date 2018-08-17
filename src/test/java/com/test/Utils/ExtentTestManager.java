@@ -3,16 +3,19 @@ package com.test.Utils;
 
 import com.aventstack.extentreports.ExtentTest;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class ExtentTestManager {
 
-    private static ThreadLocal<ExtentTest> extentPool = new ThreadLocal<ExtentTest>();
+    static Map<Long, ExtentTest> extentPool = new ConcurrentHashMap<>();
 
-    public static void setExtentTest ( ExtentTest extentTest ) {
-        extentPool.set(extentTest);
+    public static synchronized void setExtentTest ( ExtentTest extentTest ) {
+        extentPool.put(Thread.currentThread().getId(), extentTest);
     }
 
-    public static ExtentTest getTest () {
-        return extentPool.get();
+    public static synchronized ExtentTest getTest () {
+        return extentPool.get(Thread.currentThread().getId());
     }
 }
 

@@ -1,9 +1,7 @@
 package com.test.Configuration;
 
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -12,7 +10,6 @@ import io.appium.java_client.service.local.AppiumServerHasNotBeenStartedLocallyE
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -29,14 +26,20 @@ import java.util.logging.Level;
 
 public class Hooks {
 
+    private PropertyReader pathReader;
+
     public URL startServer () {
 
-        URL url = null;
+        pathReader = new PropertyReader();
+
+        String appiumPath = pathReader.readProperty("APPIUM_PATH");
+
+        URL url;
 
         AppiumDriverLocalService service;
 
         AppiumServiceBuilder appiumServiceBuilder = new AppiumServiceBuilder()
-                .withAppiumJS(new File("/usr/local/lib/node_modules/appium/build/lib/main.js"))
+                .withAppiumJS(new File(appiumPath))
                 .withIPAddress("127.0.0.1")
                 .usingAnyFreePort();
         service = appiumServiceBuilder.build();
