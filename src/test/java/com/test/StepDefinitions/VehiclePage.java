@@ -78,6 +78,6 @@ public class VehiclePage {
 
         Thread.sleep(1111);
 
-        vehiclePageObjects.addAnotherVehicle_No.click();
+        executor.executeScript("arguments[0].click();", vehiclePageObjects.addAnotherVehicle_No);
     }
 }
