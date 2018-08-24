@@ -75,7 +75,7 @@ public class Listener implements ITestListener, IInvokedMethodListener {
 
         List<XmlClass> classnames = iTestContext.getCurrentXmlTest().getClasses();
         for (XmlClass classname : classnames) {
-            String name = classname.getName().toString();
+            String name = classname.getName();
             String[] names = name.split("\\.");
 
             String deviceName = iTestContext.getCurrentXmlTest().getLocalParameters().get("deviceName");

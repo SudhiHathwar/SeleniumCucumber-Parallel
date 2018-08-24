@@ -2,5 +2,7 @@ package com.test.Configuration;
 
 public interface BrowserInterface {
 
-    void loadURL();
+    void selectInsuranceTypeAndEnterZipCode ();
+
+    void clickOnThanksButton ();
 }

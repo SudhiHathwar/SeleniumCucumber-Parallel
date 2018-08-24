@@ -13,26 +13,26 @@
             <class name="com.test.Runner.RunCukesTest"/>
         </classes>
     </test>
-    <test name="Test-Android">
-        <parameter name="platform" value="Android"></parameter>
-        <parameter name="platformVersion" value=""></parameter>
-        <parameter name="deviceName" value="Android Device"></parameter>
-        <parameter name="port" value="2315"></parameter>
-        <parameter name="udid" value=""></parameter>
-        <parameter name="browserName" value="chrome"></parameter>
-        <classes>
-            <class name="com.test.Runner.RunCukesTest"/>
-        </classes>
-    </test>
-    <test name="Test-IOS">
-        <parameter name="platform" value="iOS"></parameter>
-        <parameter name="platformVersion" value=""></parameter>
-        <parameter name="deviceName" value="iOS Device"></parameter>
-        <parameter name="port" value="2317"></parameter>
-        <parameter name="udid" value=""></parameter>
-        <parameter name="browserName" value="safari"></parameter>
-        <classes>
-            <class name="com.test.Runner.RunCukesTest"/>
-        </classes>
-    </test>
+    <!--<test name="Test-Android">-->
+        <!--<parameter name="platform" value="Android"></parameter>-->
+        <!--<parameter name="platformVersion" value=""></parameter>-->
+        <!--<parameter name="deviceName" value="Android Device"></parameter>-->
+        <!--<parameter name="port" value="2315"></parameter>-->
+        <!--<parameter name="udid" value=""></parameter>-->
+        <!--<parameter name="browserName" value="chrome"></parameter>-->
+        <!--<classes>-->
+            <!--<class name="com.test.Runner.RunCukesTest"/>-->
+        <!--</classes>-->
+    <!--</test>-->
+    <!--<test name="Test-IOS">-->
+        <!--<parameter name="platform" value="iOS"></parameter>-->
+        <!--<parameter name="platformVersion" value=""></parameter>-->
+        <!--<parameter name="deviceName" value="iOS Device"></parameter>-->
+        <!--<parameter name="port" value="2317"></parameter>-->
+        <!--<parameter name="udid" value=""></parameter>-->
+        <!--<parameter name="browserName" value="safari"></parameter>-->
+        <!--<classes>-->
+            <!--<class name="com.test.Runner.RunCukesTest"/>-->
+        <!--</classes>-->
+    <!--</test>-->
 </suite>

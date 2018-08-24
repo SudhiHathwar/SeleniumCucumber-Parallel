@@ -1,27 +1,51 @@
 package com.test.flows;
 
-import com.aventstack.extentreports.Status;
+import com.test.Configuration.BrowserHelper;
 import com.test.Configuration.BrowserInterface;
-import com.test.Configuration.LocalDriverManager;
-import com.test.Utils.ExtentTestManager;
-import com.test.Utils.URLGetter;
+import com.test.Entities.InsuranceType;
+import com.test.Screens.HomePageObjects;
+import com.test.Screens.YourInfoPageObjects;
+import com.test.StepDefinitions.YourInfoPage;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
 
 public class WebFlow implements BrowserInterface {
 
     private WebDriver driver;
+    private HomePageObjects homePageObjects;
+    private YourInfoPageObjects yourInfoPageObjects;
+    private BrowserHelper helper;
 
     public WebFlow ( WebDriver driver ) {
         this.driver = driver;
+
+        homePageObjects = new HomePageObjects();
+        yourInfoPageObjects = new YourInfoPageObjects();
+
+        PageFactory.initElements(driver, homePageObjects);
+        PageFactory.initElements(driver, yourInfoPageObjects);
+        helper = new BrowserHelper(driver);
     }
 
     @Override
-    public void loadURL () {
+    public void selectInsuranceTypeAndEnterZipCode () {
 
-        URLGetter getter = new URLGetter();
+//        helper.SelectDropdownByText(homePageObjects.insuranceType, insuranceType.toString());
 
-        ExtentTestManager.getTest().log(Status.INFO, "Navigating to " + getter.getURL("APP_URL"));
+//        homePageObjects.zipCode.sendKeys(zipCode);
 
-        LocalDriverManager.getDriver().get(getter.getURL("APP_URL"));
+        JavascriptExecutor executor = (JavascriptExecutor)driver;
+        executor.executeScript("arguments[0].click();", homePageObjects.startYourQuote);
+
+        helper.SelectDropdownByText(homePageObjects.quoteType, "Auto Insurance");
+
+        homePageObjects.zipCode.sendKeys("92122");
+
+        homePageObjects.startMyQuote.click();
+    }
+
+    @Override
+    public void clickOnThanksButton () {
     }
 }
