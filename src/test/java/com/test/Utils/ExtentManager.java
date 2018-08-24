@@ -20,7 +20,7 @@ public class ExtentManager {
             htmlReporter.config().setDocumentTitle("Browser Test");
             htmlReporter.config().setReportName("Browser Test");
             htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
-            htmlReporter.config().setTheme(Theme.DARK);
+            htmlReporter.config().setTheme(Theme.STANDARD);
 
             extent = new ExtentReports();
             extent.setSystemInfo("user", System.getProperty("Test User"));
