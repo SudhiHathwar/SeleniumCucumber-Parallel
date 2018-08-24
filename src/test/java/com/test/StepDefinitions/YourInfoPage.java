@@ -7,7 +7,6 @@ import com.test.Configuration.TestRunnerInfo;
 import com.test.Screens.YourInfoPageObjects;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 
 public class YourInfoPage {
@@ -36,11 +35,7 @@ public class YourInfoPage {
         yourInfoPageObjects.lastName.sendKeys("Automation");
         yourInfoPageObjects.dateOfBirth.click();
 
-        Actions actions = new Actions(driver);
-        actions.moveToElement(yourInfoPageObjects.dateOfBirth);
-        actions.click();
-        actions.sendKeys("12141992");
-        actions.build().perform();
+        runnerInfo.selectDOB();
 
         yourInfoPageObjects.male.click();
 

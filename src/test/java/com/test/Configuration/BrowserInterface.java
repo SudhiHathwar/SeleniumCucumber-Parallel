@@ -5,4 +5,6 @@ public interface BrowserInterface {
     void selectInsuranceTypeAndEnterZipCode ();
 
     void clickOnThanksButton ();
+
+    void selectDOB ();
 }

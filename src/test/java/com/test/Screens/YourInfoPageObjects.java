@@ -1,5 +1,6 @@
 package com.test.Screens;
 
+import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 

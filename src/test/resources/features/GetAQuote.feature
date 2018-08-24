@@ -1,8 +1,8 @@
 @smoke
 
-Feature: Booking Feature
+Feature: Get a quote Feature
 
-  Scenario: validate search results
+  Scenario: Validate get a quote flow
 
     Given User lands on home page
     When User selects insurance type, enters zipCode and click on Get a Quote button

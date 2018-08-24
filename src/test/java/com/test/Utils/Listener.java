@@ -5,19 +5,18 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.utils.ExceptionUtil;
 import com.test.Configuration.Hooks;
 import com.test.Configuration.LocalDriverManager;
+import cucumber.api.testng.CucumberFeatureWrapperImpl;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.testng.*;
-import org.testng.xml.XmlClass;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 public class Listener implements ITestListener, IInvokedMethodListener {
 
@@ -69,24 +68,15 @@ public class Listener implements ITestListener, IInvokedMethodListener {
     public void afterInvocation ( IInvokedMethod iInvokedMethod, ITestResult iTestResult ) {
     }
 
+    String deviceName;
+    String browserName;
+
     @Override
     public void onStart ( ITestContext iTestContext ) {
         iTestContext.setAttribute("WebDriver", LocalDriverManager.getDriver());
 
-        List<XmlClass> classnames = iTestContext.getCurrentXmlTest().getClasses();
-        for (XmlClass classname : classnames) {
-            String name = classname.getName();
-            String[] names = name.split("\\.");
-
-            String deviceName = iTestContext.getCurrentXmlTest().getLocalParameters().get("deviceName");
-            String browserName = iTestContext.getCurrentXmlTest().getLocalParameters().get("browserName");
-
-            if (deviceName == null) {
-                ExtentTestManager.setExtentTest(ExtentManager.getReporter().createTest(names[names.length - 1] + " - Desktop", "Running tests on Desktop browser:" + browserName));
-            } else {
-                ExtentTestManager.setExtentTest(ExtentManager.getReporter().createTest(names[names.length - 1] + " - " + deviceName, "Running tests on " + deviceName + " browser:" + browserName));
-            }
-        }
+        deviceName = iTestContext.getCurrentXmlTest().getLocalParameters().get("deviceName");
+        browserName = iTestContext.getCurrentXmlTest().getLocalParameters().get("browserName");
 
         try {
             FileUtils.cleanDirectory(new File(System.getProperty("user.dir") + "/target/screenshot/"));
@@ -104,6 +94,22 @@ public class Listener implements ITestListener, IInvokedMethodListener {
     @Override
     public void onTestStart ( ITestResult iTestResult ) {
 
+        String methodName = iTestResult.getMethod().getMethodName();
+        String description = "Running tests on:" + deviceName;
+        Object[] obj = iTestResult.getParameters();
+
+        int counter = 0;
+        while (obj.length != counter) {
+            methodName = ((CucumberFeatureWrapperImpl) obj[0]).getCucumberFeature().getPath().replace(".feature", "");
+            description = ((CucumberFeatureWrapperImpl) obj[0]).getCucumberFeature().getFeatureElements().get(0).getVisualName();
+            counter++;
+        }
+
+        if (deviceName == null) {
+            ExtentTestManager.setExtentTest(ExtentManager.getReporter().createTest(methodName + " - Desktop", description));
+        } else {
+            ExtentTestManager.setExtentTest(ExtentManager.getReporter().createTest(methodName + " - " + deviceName, description));
+        }
     }
 
     @Override

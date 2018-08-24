@@ -27,7 +27,7 @@ public class RunCukesTest extends Hooks {
     }
 
     @Test(groups = "smoke", description = "Runs Cucumber Feature", dataProvider = "features")
-    public void bookingTest ( CucumberFeatureWrapper cucumberFeature ) {
+    public void getAQuote ( CucumberFeatureWrapper cucumberFeature ) {
         testNGCucumberRunner.runCucumber(cucumberFeature.getCucumberFeature());
     }
 

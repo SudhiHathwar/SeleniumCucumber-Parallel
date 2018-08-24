@@ -34,10 +34,9 @@ public class HomePage {
     }
 
     @When("^User selects insurance type, enters zipCode and click on Get a Quote button$")
-    public void selectInsuranceTypeAndEnterZipcode ( ) {
+    public void selectInsuranceTypeAndEnterZipcode () {
         runnerInfo.selectInsuranceTypeAndEnterZipCode();
     }
-
 
 
 }

@@ -8,8 +8,8 @@ public class HomePageObjects {
 //    @FindBy(id = "selectInsuraceType")
 //    public WebElement insuranceType;
 //
-//    @FindBy(id="zipCode")
-//    public WebElement zipCode;
+    @FindBy(id="zipCode")
+    public WebElement m_zipCode;
 
     @FindBy(id = "startYourQuote")
     public WebElement startYourQuote;
@@ -25,4 +25,13 @@ public class HomePageObjects {
 
     @FindBy(id = "landing:zipCode")
     public WebElement zipCode;
+
+    @FindBy(id="landing:DecideQuote:1")
+    public WebElement retriveQuote;
+
+    @FindBy(id="landing:lastName")
+    public WebElement lastName;
+
+    @FindBy(id="landing:datepicker")
+    public WebElement dateOfBirth;
 }

@@ -33,7 +33,7 @@ public class DriversPage {
 
         driversPageObjects.architect.click();
 
-        helper.waitForElement(driversPageObjects.architect);
+        helper.waitForElement(driversPageObjects.age);
 
         driversPageObjects.age.sendKeys("16");
 
