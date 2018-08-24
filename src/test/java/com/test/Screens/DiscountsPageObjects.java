@@ -11,6 +11,6 @@ public class DiscountsPageObjects {
     @FindBy(id = "FFQ_Auto-bundlechk_continue-button")
     public WebElement skip;
 
-    @FindBy(linkText = "Go to Farmers.com")
+    @FindBy(xpath = "//a[text()='Go to Farmers.com']")
     public WebElement farmersLink;
 }
