@@ -80,8 +80,8 @@ public class Listener implements ITestListener, IInvokedMethodListener {
 
         try {
             FileUtils.cleanDirectory(new File(System.getProperty("user.dir") + "/target/screenshot/"));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            // Do Nothing
         }
 
     }
